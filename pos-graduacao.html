@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pós-Graduação - Prof. Dr. Carlos Alex</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            text-align: center;
+        }
+
+        nav {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 1rem;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav ul li a:hover {
+            color: #2a5298;
+        }
+
+        .content-section {
+            background: white;
+            margin: 3rem auto;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .content-section h2 {
+            color: #1e3c72;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid #2a5298;
+            padding-bottom: 0.5rem;
+        }
+
+        .program-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .program-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .program-card h3 i {
+            font-size: 2.5rem;
+        }
+
+        .program-card .institution {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            opacity: 0.95;
+        }
+
+        .program-card p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .program-card .highlight {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .topics-list {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .topics-list h3 {
+            color: #1e3c72;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .topics-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .topics-list ul li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .topics-list ul li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-box h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-box p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-box a {
+            display: inline-block;
+            background: white;
+            color: #1e3c72;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .cta-box a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-book"></i> Pós-Graduação</h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+            <li><a href="sobre.html"><i class="fas fa-user"></i> Sobre</a></li>
+            <li><a href="formacao.html"><i class="fas fa-graduation-cap"></i> Formação</a></li>
+            <li><a href="atuacao.html"><i class="fas fa-briefcase"></i> Atuação</a></li>
+            <li><a href="pos-graduacao.html"><i class="fas fa-book"></i> Pós-Graduação</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="content-section">
+            <h2>Programas de Pós-Graduação</h2>
+            
+            <div class="program-card">
+                <h3><i class="fas fa-university"></i> PROFNIT - IFMT</h3>
+                <p class="institution">Mestrado Profissional em Propriedade Intelectual e Transferência de Tecnologia para Inovação</p>
+                <p>Docente permanente e membro do Colegiado do Mestrado PROFNIT/IFMT - Campus Primavera do Leste</p>
+                <div class="highlight">
+                    <p><strong>Disciplina Ministrada:</strong> Conceitos e Aplicações de Transferência de Tecnologia</p>
+                    <p><strong>Atuação:</strong> Desde fevereiro de 2025</p>
+                </div>
+            </div>
+
+            <div class="program-card">
+                <h3><i class="fas fa-university"></i> ProfEducaTec - UNEMAT</h3>
+                <p class="institution">Mestrado Profissional em Processos e Educação Tecnológica</p>
+                <p>Docente permanente e Vice-Coordenador do Mestrado ProfEducatec - Campus de Alto Araguaia</p>
+                <div class="highlight">
+                    <p><strong>Foco:</strong> Tecnologias Educacionais e Metodologias Inovadoras</p>
+                    <p><strong>Atuação:</strong> Desde junho de 2025</p>
+                </div>
+            </div>
+
+            <div class="topics-list">
+                <h3><i class="fas fa-lightbulb"></i> Temas de Orientação</h3>
+                <ul>
+                    <li>Inteligência Artificial aplicada à Educação</li>
+                    <li>Visão Computacional e Processamento de Imagens</li>
+                    <li>Computação de Alto Desempenho</li>
+                    <li>Propriedade Intelectual e Transferência de Tecnologia</li>
+                    <li>Tecnologias Educacionais e Metodologias Ativas</li>
+                    <li>Aprendizado de Máquina e Deep Learning</li>
+                    <li>Inovação Tecnológica no Agronegócio</li>
+                    <li>Cidadania Digital e Inclusão Tecnológica</li>
+                </ul>
+            </div>
+
+            <div class="topics-list">
+                <h3><i class="fas fa-project-diagram"></i> Projetos Integradores PROFNIT</h3>
+                <ul>
+                    <li><strong>PITT nas Engenharias e na Tecnologia da Informação e Comunicação:</strong> Mapear, desenvolver, analisar e propor o uso de propriedade intelectual e transferência de tecnologia nas engenharias e TIC</li>
+                    <li><strong>PITT no Agronegócio:</strong> Analisar e propor melhorias em formas de proteção da inovação no agronegócio, desenvolvendo estratégias de proteção distintas</li>
+                </ul>
+            </div>
+
+            <div class="cta-box">
+                <h3><i class="fas fa-envelope-open-text"></i> Interessado em Orientação?</h3>
+                <p>Entre em contato para discutir possibilidades de orientação em projetos de mestrado nas áreas de Inteligência Artificial, Visão Computacional, Propriedade Intelectual e Tecnologias Educacionais.</p>
+                <a href="mailto:sander@unemat.br">
+                    <i class="fas fa-paper-plane"></i> Enviar E-mail
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-envelope"></i> Contato</h3>
+                    <a href="mailto:sander@unemat.br">
+                        <i class="fas fa-envelope"></i> sander@unemat.br
+                    </a>
+                    <p><i class="fas fa-phone"></i> (66) 3481-1857</p>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-map-marker-alt"></i> Endereço</h3>
+                    <p><i class="fas fa-building"></i> Campus de Alto Araguaia</p>
+                    <p>Rua Santa Rita, 128 - Centro</p>
+                    <p>78780-000 - Alto Araguaia, MT</p>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-share-alt"></i> Redes Sociais</h3>
+                    <a href="https://bit.ly/CAlexGoogleScholar" target="_blank">
+                        <i class="fas fa-graduation-cap"></i> Google Scholar
+                    </a>
+                    <a href="http://lattes.cnpq.br/0062065110639984" target="_blank">
+                        <i class="fas fa-id-card"></i> Lattes
+                    </a>
+                    <a href="https://orcid.org/0000-0002-5000-497X" target="_blank">
+                        <i class="fab fa-orcid"></i> ORCID
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Prof. Dr. Carlos Alex Sander Juvêncio Gulo</p>
+                <p>Professor Adjunto - UNEMAT | Coordenador de Ciência da Computação</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

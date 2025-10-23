@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre - Prof. Dr. Carlos Alex</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            text-align: center;
+        }
+
+        nav {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 1rem;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav ul li a:hover {
+            color: #2a5298;
+        }
+
+        .content-section {
+            background: white;
+            margin: 3rem auto;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .content-section h2 {
+            color: #1e3c72;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #2a5298;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section p {
+            font-size: 1.15rem;
+            text-align: justify;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+
+        .highlight-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .highlight-box ul li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .highlight-box ul li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-user"></i> Sobre o Professor</h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+            <li><a href="sobre.html"><i class="fas fa-user"></i> Sobre</a></li>
+            <li><a href="formacao.html"><i class="fas fa-graduation-cap"></i> Formação</a></li>
+            <li><a href="atuacao.html"><i class="fas fa-briefcase"></i> Atuação</a></li>
+            <li><a href="pos-graduacao.html"><i class="fas fa-book"></i> Pós-Graduação</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="content-section">
+            <h2>Perfil Profissional</h2>
+            <p>
+                Carlos Alex Gulo é pesquisador em Ciência da Computação, com doutorado em Engenharia Informática pela Faculdade de Engenharia da Universidade do Porto (FEUP, Portugal) e mestrado em Ciência da Computação pela UNESP. Atualmente, é professor adjunto na Universidade do Estado de Mato Grosso (UNEMAT) e líder do Grupo de Pesquisa PIXEL.
+            </p>
+            <p>
+                Sua trajetória inclui atuação como pesquisador no Instituto de Ciência e Inovação em Engenharia Mecânica e Industrial (INEGI, Portugal) e liderança em projetos de inovação tecnológica em parceria com a Universidade Federal de Rondonópolis, financiados pela FAPEMAT, que impulsionaram o desenvolvimento científico e tecnológico na região de Alto Araguaia e Rondonópolis.
+            </p>
+            <p>
+                Destaca-se também sua participação no IST TECH HUB do Instituto SENAI MT, projeto que captou R$ 5 milhões em recursos da FINEP. É membro ativo do Comitê Científico e do Comitê Institucional do Programa de Bolsas de Iniciação em Desenvolvimento Tecnológico e Inovação da PRPPG/UNEMAT.
+            </p>
+
+            <div class="highlight-box">
+                <h3><i class="fas fa-star"></i> Destaques da Carreira</h3>
+                <ul>
+                    <li>Líder do Laboratório de Inovação em Inteligência Artificial e Computação Aplicada (PIXEL)</li>
+                    <li>Docente permanente nos programas de mestrado em Processos e Educação Tecnológica (UNEMAT) e PROFNIT/IFMT</li>
+                    <li>Editor convidado da revista Frontiers e revisor de periódicos internacionais</li>
+                    <li>Concluiu o Applied Data Science Program: Leveraging AI for Effective Decision-Making pelo MIT (2025)</li>
+                    <li>Contemplado com bolsas de doutorado na Europa e pelo CNPq (2015)</li>
+                    <li>Embaixador do Imperial College Computing Student Workshop na Universidade do Porto</li>
+                </ul>
+            </div>
+
+            <h2>Educador em Inteligência Artificial</h2>
+            <p>
+                Atua como Educador em Inteligência Artificial, desenvolvendo e aplicando metodologias inovadoras para democratizar o ensino de IA e promover a alfabetização digital em diferentes níveis educacionais. Possui experiência consolidada na formação de recursos humanos, com orientações de graduação, iniciação científica e pós-graduação.
+            </p>
+            <p>
+                Com publicações em periódicos de alto impacto e participação em eventos científicos nacionais e internacionais, seu trabalho é reconhecido por promover a inclusão digital, a inovação tecnológica e o fortalecimento da pesquisa científica no Brasil, especialmente na região Centro-Oeste.
+            </p>
+            <p>
+                Além da carreira acadêmica, possui experiência em formação de jovens talentos, tendo atuado como treinador de tênis de mesa no IFMT Rondonópolis (2019-2020).
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-envelope"></i> Contato</h3>
+                    <a href="mailto:sander@unemat.br">
+                        <i class="fas fa-envelope"></i> sander@unemat.br
+                    </a>
+                    <p><i class="fas fa-phone"></i> (66) 3481-1857</p>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-map-marker-alt"></i> Endereço</h3>
+                    <p><i class="fas fa-building"></i> Campus de Alto Araguaia</p>
+                    <p>Rua Santa Rita, 128 - Centro</p>
+                    <p>78780-000 - Alto Araguaia, MT</p>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-share-alt"></i> Redes Sociais</h3>
+                    <a href="https://bit.ly/CAlexGoogleScholar" target="_blank">
+                        <i class="fas fa-graduation-cap"></i> Google Scholar
+                    </a>
+                    <a href="http://lattes.cnpq.br/0062065110639984" target="_blank">
+                        <i class="fas fa-id-card"></i> Lattes
+                    </a>
+                    <a href="https://orcid.org/0000-0002-5000-497X" target="_blank">
+                        <i class="fab fa-orcid"></i> ORCID
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Prof. Dr. Carlos Alex Sander Juvêncio Gulo</p>
+                <p>Professor Adjunto - UNEMAT | Coordenador de Ciência da Computação</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
