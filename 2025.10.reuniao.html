@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPE CC 2026 - Apresentação Interativa</title>
+    <!-- Carrega o Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Estilos customizados para ícones Lucide (SVG) */
+        .lucide-icon {
+            display: inline-block;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+        /* Custom scrollbar for better appearance */
+        .slide-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .slide-content::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1; /* gray-300 */
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col justify-center items-center min-h-screen p-4">
+
+    <div id="presentation-root" class="w-full max-w-5xl bg-white rounded-2xl shadow-2xl overflow-hidden border-t-8 border-blue-600 flex flex-col h-[700px] relative transition-all duration-500">
+        <!-- O conteúdo será injetado aqui pelo JavaScript -->
+        <div class="text-center p-8 text-gray-500">Carregando Apresentação...</div>
+    </div>
+    <div id="slide-info" class="mt-4 text-base font-medium text-gray-600"></div>
+
+    <script>
+        // Ícones em SVG inline (simulando lucide-react)
+        const icons = {
+            Target: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
+            Calendar: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>`,
+            Code: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+            Rocket: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.91 2.82-3.41 3-6 0 0-1 0-2 0s-2-2-2-2c-.75-1.42-1-3-1-3s1.42-.75 3-1c0-2 0-2 0-2s0 2 0 3c2.59.18 5.09 2.29 6 3 0 0 2 2 2 2s-2 1-2 2c0 0 2 0 2-2c0-2 0-2 0-3c2-1 3-3 3-3s-1-2-3-2c0 0-1 0-2 0s-2-2-2-2c-.58-1.42-1-3-1-3s1.42-.75 3-1c0-2 0-2 0-2s0 2 0 3c2.59.18 5.09 2.29 6 3"/></svg>`,
+            Users: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+            Award: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><path d="M19 8H5c-1.66 0-3 1.34-3 3v4c0 1.66 1.34 3 3 3h14c1.66 0 3-1.34 3-3v-4c0-1.66-1.34-3-3-3z"/><path d="M12 18v3m0-6V7"/></svg>`,
+            BookOpen: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><path d="M2 19.5V12s0-2 2-2h18v10H4z"/><path d="M22 12s0-2-2-2H4c-2 0-2 2-2 2v7.5C2 21.4 3.6 23 5.5 23H17l5-5V12z"/></svg>`,
+            ChevronLeft: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><path d="m15 18-6-6 6-6"/></svg>`,
+            ChevronRight: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><path d="m9 18 6-6-6-6"/></svg>`,
+            CheckSquare: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
+            Zap: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
+            Grid: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="12" x2="12" y1="3" y2="21"/></svg>`,
+            FileText: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><line x1="10" x2="15" y1="17" y2="17"/><line x1="10" x2="14" y1="13" y2="13"/></svg>`,
+            Briefcase: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M16 7h-8"/></svg>`,
+            Clock: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+            Speaker: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><circle cx="12" cy="14" r="4"/><path d="M12 2v2M8 17h8"/></svg>`,
+            Lightbulb: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><path d="M15 14c.2-.63.4-1.27.6-1.9"/><path d="M14.53 11.23a4 4 0 0 0-6.46-3.87"/><path d="M12 21.05V15"/><path d="M12 21.05a2.5 2.5 0 0 0 0-5.04"/></svg>`,
+            MessageCircle: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="lucide-icon"><path d="M7.9 20A10 10 0 0 1 12 12c.5-1.5.3-3-.4-4.2A10 10 0 0 0 2.5 16.6L7.9 20z"/></svg>`,
+        };
+
+        // CORREÇÃO: Apenas o nome do arquivo.
+        const LOGO_SRC = "logo_unemat_bcc_horizontal_fundo_preto_texto_branco.png"; 
+
+        // Função utilitária para renderizar ícones
+        function renderIcon(name, classes) {
+            const svg = icons[name] || '';
+            // Adiciona classes Tailwind ao SVG
+            return svg.replace(/class="lucide-icon"/, `class="lucide-icon ${classes}"`);
+        }
+
+        // --- Dados dos Slides (Conteúdo) ---
+        const slideData = [
+            // Slide 1 - Capa
+            {
+                title: 'Plano Pedagógico Estratégico',
+                subtitle: 'Curso de Ciência da Computação 2026',
+                icon: renderIcon('BookOpen', 'w-16 h-16 text-blue-600'),
+                content: `
+                    <div class="text-center space-y-4">
+                        <h1 class="text-6xl font-extrabold text-blue-700 mt-10">PPE CC 2026</h1>
+                        <h2 class="text-3xl font-semibold text-gray-700">Articulação entre Ensino, Pesquisa e Extensão</h2>
+                        <p class="text-xl text-gray-500 italic mt-8">Engajamento e Presença no Campus através da AI (Ação Integrada)</p>
+                    </div>
+                `,
+                footer: 'Prof. Dr. Carlos Alex Gulo, Coordenador do Curso de Ciência da Computação, Outubro/2025',
+                color: 'border-blue-500',
+            },
+
+            // Slide 2 - Contexto e Desafios
+            {
+                title: 'Contexto e Desafios',
+                subtitle: 'Análise do Cenário Atual',
+                icon: renderIcon('Target', 'w-10 h-10 text-blue-500'),
+                content: `
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Desafios -->
+                        <div class="bg-red-50 border-t-4 border-red-500 p-6 rounded-xl shadow-lg">
+                            <h3 class="text-2xl font-bold text-red-700 mb-4 flex items-center">${renderIcon('MessageCircle', 'w-6 h-6 mr-2')} Desafios Identificados</h3>
+                            <ul class="list-disc list-inside space-y-2 text-red-800 ml-4">
+                                <li>Baixo engajamento discente</li>
+                                <li>Necessidade de articulação teoria-prática</li>
+                                <li>Falta de estruturação da AI (Ação Integrada)</li>
+                                <li>Ausência de padronização</li>
+                            </ul>
+                        </div>
+                        <!-- Oportunidades -->
+                        <div class="bg-green-50 border-t-4 border-green-500 p-6 rounded-xl shadow-lg">
+                            <h3 class="text-2xl font-bold text-green-700 mb-4 flex items-center">${renderIcon('Zap', 'w-6 h-6 mr-2')} Oportunidades</h3>
+                            <ul class="list-disc list-inside space-y-2 text-green-800 ml-4">
+                                <li>Editais de Bolsas (Abril/2026)</li>
+                                <li>SECOMP 2026 (Junho)</li>
+                                <li>Desenvolvimento de sistemas estratégicos</li>
+                                <li>Fortalecimento da extensão</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                color: 'border-red-500',
+            },
+
+            // Slide 3 - Eixos Estratégicos do PPE
+            {
+                title: 'Eixos Estratégicos do PPE',
+                subtitle: 'O Pilar do Planejamento 2026',
+                icon: renderIcon('Target', 'w-10 h-10 text-blue-500'),
+                content: `
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Card 1 -->
+                        <div class="col-span-1 p-4 rounded-xl shadow-md bg-blue-100 border-l-4 border-blue-500">
+                            <h4 class="font-bold text-blue-800 mb-1 flex items-center">${renderIcon('BookOpen', 'w-4 h-4 mr-1')} Disciplinas Atribuídas</h4>
+                            <p class="text-sm text-blue-700">Apresentação das disciplinas 2026/1.</p>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="col-span-1 p-4 rounded-xl shadow-md bg-purple-100 border-l-4 border-purple-500">
+                            <h4 class="font-bold text-purple-800 mb-1 flex items-center">${renderIcon('FileText', 'w-4 h-4 mr-1')} Extensão e Creditação</h4>
+                            <p class="text-sm text-purple-700">Critérios de carga horária e artefatos.</p>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="col-span-1 p-4 rounded-xl shadow-md bg-green-100 border-l-4 border-green-500">
+                            <h4 class="font-bold text-green-800 mb-1 flex items-center">${renderIcon('CheckSquare', 'w-4 h-4 mr-1')} Proposição de Atividades</h4>
+                            <p class="text-sm text-green-700">Projetos IC, IT, TCC, Estágio e AI.</p>
+                        </div>
+                        <!-- Card 4 -->
+                        <div class="col-span-1 p-4 rounded-xl shadow-md bg-orange-100 border-l-4 border-orange-500">
+                            <h4 class="font-bold text-orange-800 mb-1 flex items-center">${renderIcon('Users', 'w-4 h-4 mr-1')} Organização da Equipe</h4>
+                            <p class="text-sm text-orange-700">Definição de responsáveis e tarefas.</p>
+                        </div>
+                        <!-- Card 5 (Full Width) -->
+                        <div class="col-span-2 lg:col-span-4 p-4 rounded-xl shadow-lg bg-indigo-100 border-l-4 border-indigo-600">
+                            <h4 class="text-lg font-bold text-indigo-800 mb-1 flex items-center">${renderIcon('Grid', 'w-5 h-5 mr-2')} Infraestrutura e Sistemas Estratégicos</h4>
+                            <p class="text-sm text-indigo-700">Coordenação de laboratórios e sistemas (TCC, Portal de Estágios, Agenda Acadêmica, Reservas, Eventos).</p>
+                        </div>
+                    </div>
+                `,
+                color: 'border-blue-500',
+            },
+
+            // Slide 4 - Linha do Tempo Estratégica
+            {
+                title: 'Linha do Tempo Estratégica',
+                subtitle: 'Marcos e Entregáveis 2025/2026',
+                icon: renderIcon('Calendar', 'w-10 h-10 text-blue-500'),
+                content: `
+                    <div class="relative border-l-4 border-gray-200 ml-4 pl-8 pt-4">
+                        <div class="absolute left-[-12px] top-0 text-3xl">📅</div>
+                        <!-- Marco 1 -->
+                        <div class="mb-8 relative">
+                            <div class="absolute -left-12 top-0 w-6 h-6 bg-blue-500 rounded-full shadow-lg"></div>
+                            <h3 class="text-xl font-bold text-blue-700">OUT/NOV 2025: Planejamento</h3>
+                            <p class="text-gray-600 ml-2">Estruturação do PPE, apresentação de disciplinas, chamada para propostas, definição de responsabilidades.</p>
+                        </div>
+                        <!-- Marco 2 -->
+                        <div class="mb-8 relative">
+                            <div class="absolute -left-12 top-0 w-6 h-6 bg-green-500 rounded-full shadow-lg"></div>
+                            <h3 class="text-xl font-bold text-green-700">ABR/2026: Captação de Recursos/Bolsas</h3>
+                            <p class="text-gray-600 ml-2">Submissão para editais, formalização de projetos IC/extensão.</p>
+                        </div>
+                        <!-- Marco 3 -->
+                        <div class="relative">
+                            <div class="absolute -left-12 top-0 w-6 h-6 bg-purple-500 rounded-full shadow-lg"></div>
+                            <h3 class="text-xl font-bold text-purple-700">JUN/2026: Apresentação de Resultados</h3>
+                            <p class="text-gray-600 ml-2">SECOMP 2026, demonstração de sistemas, avaliação.</p>
+                        </div>
+                    </div>
+                `,
+                color: 'border-blue-500',
+            },
+
+            // Slide 5 - Sistemas Estratégicos em Desenvolvimento
+            {
+                title: 'Exemplo AI em Desenvolvimento',
+                subtitle: 'Disciplina: Lab. POO',
+                icon: renderIcon('Code', 'w-10 h-10 text-blue-500'),
+                content: `
+                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Card 1 -->
+                        <div class="p-6 rounded-xl shadow-lg bg-gradient-to-br from-blue-400 to-blue-600 text-white border-b-4 border-blue-800">
+                            <h4 class="font-bold text-xl mb-2 flex items-center">${renderIcon('FileText', 'w-5 h-5 mr-2')} Controle de TCC</h4>
+                            <p class="text-sm">Desenvolvido em LPOO.</p>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="p-6 rounded-xl shadow-lg bg-gradient-to-br from-green-400 to-green-600 text-white border-b-4 border-green-800">
+                            <h4 class="font-bold text-xl mb-2 flex items-center">${renderIcon('Briefcase', 'w-5 h-5 mr-2')} Portal de Estágios</h4>
+                            <p class="text-sm">Integração estudante-empresa.</p>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="p-6 rounded-xl shadow-lg bg-gradient-to-br from-purple-400 to-purple-600 text-white border-b-4 border-purple-800">
+                            <h4 class="font-bold text-xl mb-2 flex items-center">${renderIcon('Clock', 'w-5 h-5 mr-2')} Agenda Inteligente</h4>
+                            <p class="text-sm">Calendário unificado.</p>
+                        </div>
+                        <!-- Card 4 -->
+                        <div class="p-6 rounded-xl shadow-lg bg-gradient-to-br from-orange-400 to-orange-600 text-white border-b-4 border-orange-800">
+                            <h4 class="font-bold text-xl mb-2 flex items-center">${renderIcon('Grid', 'w-5 h-5 mr-2')} Reservas de Salas</h4>
+                            <p class="text-sm">Gestão de espaços.</p>
+                        </div>
+                        <!-- Card 5 (Span 2) -->
+                        <div class="col-span-2 lg:col-span-2 p-6 rounded-xl shadow-lg bg-gradient-to-br from-pink-500 to-red-600 text-white border-b-4 border-red-800">
+                            <h4 class="font-bold text-xl mb-2 flex items-center">${renderIcon('Speaker', 'w-5 h-5 mr-2')} Organização de Eventos</h4>
+                            <p class="text-sm">Plataforma completa para eventos acadêmicos.</p>
+                        </div>
+                    </div>
+                `,
+                color: 'border-blue-500',
+            },
+
+            // Slide 6 - Próximos Passos Imediatos
+            {
+                title: 'Próximos Passos Imediatos',
+                subtitle: 'Ações Chave para o Próximo Mês',
+                icon: renderIcon('Rocket', 'w-10 h-10 text-blue-500'),
+                content: `
+                    <div class="flex flex-col space-y-6">
+                        <!-- Passo 1 -->
+                        <div class="bg-yellow-100 p-4 rounded-xl border-l-4 border-yellow-500 shadow">
+                            <h3 class="text-lg font-bold text-yellow-800">Apresentação das Disciplinas 2026/1</h3>
+                            <p class="text-yellow-700">Compartilhamento com corpo docente. <span class="font-semibold">Prazo: Nesta reunião</span></p>
+                        </div>
+                        <!-- Passo 2 -->
+                        <div class="bg-blue-100 p-4 rounded-xl border-l-4 border-blue-500 shadow">
+                            <h3 class="text-lg font-bold text-blue-800">Chamada para Propostas de Projetos (IC/AI)</h3>
+                            <p class="text-blue-700 mb-3">Propostas de pesquisa/AI, objetivos e cronograma.</p>
+                            <div class="bg-blue-50 p-3 rounded-md border border-blue-300">
+                                <h4 class="font-bold text-blue-800 mb-1 flex items-center">${renderIcon('Lightbulb', 'w-4 h-4 mr-1')} Sugestões de Temas:</h4>
+                                <div class="grid grid-cols-2 text-sm text-blue-700">
+                                    <span>- Inteligência Artificial</span>
+                                    <span>- Visão Computacional</span>
+                                    <span>- Robótica</span>
+                                    <span>- Automação</span>
+                                    <span>- Engenharia de Software</span>
+                                    <span>- Montagem e Manutenção de Computadores</span>
+                                </div>
+                            </div>
+                            <p class="font-semibold mt-3 text-blue-800">Prazo: 30/11/2025</p>
+                        </div>
+                        <!-- Passo 3 -->
+                        <div class="bg-green-100 p-4 rounded-xl border-l-4 border-green-500 shadow">
+                            <h3 class="text-lg font-bold text-green-800">Definição de Responsáveis e Cronograma</h3>
+                            <p class="text-green-700">Coordenador de laboratório, marcos mensais, preparação SECOMP. <span class="font-semibold">Prazo: Nesta reunião + acompanhamento mensal</span></p>
+                        </div>
+                    </div>
+                `,
+                color: 'border-blue-500',
+            },
+
+            // Slide 7 - Organização e Responsabilidades
+            {
+                title: 'Organização e Responsabilidades',
+                subtitle: 'Estrutura de Liderança do PPE',
+                icon: renderIcon('Users', 'w-10 h-10 text-blue-500'),
+                content: `
+                    <div class="space-y-6">
+                        <div class="bg-indigo-700 p-6 rounded-xl shadow-2xl text-white">
+                            <h3 class="text-2xl font-bold mb-4">Estrutura de Equipe</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-white text-indigo-800 p-4 rounded-lg shadow-md">
+                                    <p class="font-semibold">Coordenação Geral:</p>
+                                    <p class="text-sm">Prof. Dr. Carlos Alex Gulo</p>
+                                </div>
+                                <div class="bg-white text-indigo-800 p-4 rounded-lg shadow-md">
+                                    <p class="font-semibold">Coordenação de Laboratório:</p>
+                                    <p class="text-sm italic">A definir nesta reunião</p>
+                                </div>
+                                <div class="bg-white text-indigo-800 p-4 rounded-lg shadow-md">
+                                    <p class="font-semibold">Docentes-Pesquisadores Proponentes:</p>
+                                    <p class="text-sm">Proposição e orientação de projetos IC/AI</p>
+                                </div>
+                                <div class="bg-white text-indigo-800 p-4 rounded-lg shadow-md">
+                                    <p class="font-semibold">Responsáveis por Sistemas Estratégicos:</p>
+                                    <p class="text-sm">Docentes e estudantes</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-200 p-3 rounded-xl text-gray-700 text-center font-medium shadow-inner">
+                            Reuniões mensais de acompanhamento
+                        </div>
+                    </div>
+                `,
+                color: 'border-indigo-700',
+            },
+
+            // Slide 8 - Benefícios Esperados
+            {
+                title: 'Benefícios Esperados',
+                subtitle: 'O Impacto do PPE CC 2026',
+                icon: renderIcon('Award', 'w-10 h-10 text-blue-500'),
+                content: `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Estudantes -->
+                        <div class="bg-blue-50 p-6 rounded-xl shadow-xl border-l-4 border-blue-500">
+                            <h3 class="text-2xl font-bold text-blue-700 mb-3">Para os Estudantes</h3>
+                            <ul class="list-disc list-inside space-y-1 text-blue-600 ml-4">
+                                <li>Experiência prática, portfólio</li>
+                                <li>Bolsas e engajamento</li>
+                                <li>Melhor preparação profissional</li>
+                            </ul>
+                        </div>
+                        <!-- Curso -->
+                        <div class="bg-green-50 p-6 rounded-xl shadow-xl border-l-4 border-green-500">
+                            <h3 class="text-2xl font-bold text-green-700 mb-3">Para o Curso</h3>
+                            <ul class="list-disc list-inside space-y-1 text-green-600 ml-4">
+                                <li>Integração teoria-prática, visibilidade</li>
+                                <li>Captação de recursos</li>
+                                <li>Padronização de sistemas institucionais</li>
+                            </ul>
+                        </div>
+                        <!-- Instituição (Full Width) -->
+                        <div class="col-span-1 md:col-span-2 bg-purple-50 p-6 rounded-xl shadow-xl border-l-4 border-purple-500">
+                            <h3 class="text-2xl font-bold text-purple-700 mb-3">Para a Instituição (UNEMAT)</h3>
+                            <ul class="list-disc list-inside space-y-1 text-purple-600 ml-4">
+                                <li>Infraestrutura digital e retenção discente</li>
+                                <li>Reconhecimento e otimização de processos</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                color: 'border-purple-500',
+            },
+
+            // Slide 9 - Encerramento
+            {
+                title: 'Definições desta Reunião',
+                subtitle: 'Próximos Passos Confirmados',
+                icon: renderIcon('CheckSquare', 'w-10 h-10 text-blue-500'),
+                content: `
+                    <div class="space-y-6">
+                        <p class="text-xl font-semibold text-gray-700">Contamos com a participação de todos para:</p>
+                        <ul class="space-y-4 mt-4">
+                            <li class="flex items-center text-xl text-blue-700 font-medium">
+                                ${renderIcon('CheckSquare', 'w-6 h-6 mr-3 text-blue-500')}
+                                Apresentação de Ações Integradas
+                            </li>
+                            <li class="flex items-center text-xl text-blue-700 font-medium">
+                                ${renderIcon('CheckSquare', 'w-6 h-6 mr-3 text-blue-500')}
+                                Distribuição de responsabilidades estratégicas
+                            </li>
+                            <li class="flex items-center text-xl text-blue-700 font-medium">
+                                ${renderIcon('CheckSquare', 'w-6 h-6 mr-3 text-blue-500')}
+                                Envio de propostas de projetos (AI) até 30/11/2025 (?)
+                            </li>
+                            <li class="flex items-center text-xl text-blue-700 font-medium">
+                                ${renderIcon('CheckSquare', 'w-6 h-6 mr-3 text-blue-500')}
+                                Definir data da próxima reunião
+                            </li>
+                        </ul>
+                    </div>
+                `,
+                footer: 'Prof. Dr. Carlos Alex Gulo, Ciência da Computação - @computacao.unemataia',
+                color: 'border-blue-500',
+            },
+        ];
+
+        let currentSlide = 0;
+        const totalSlides = slideData.length;
+
+        const root = document.getElementById('presentation-root');
+        const slideInfo = document.getElementById('slide-info');
+
+        function goToNext() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                render();
+            }
+        }
+
+        function goToPrevious() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                render();
+            }
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            render();
+        }
+
+        function render() {
+            const slide = slideData[currentSlide];
+            
+            // 1. Renderiza o Logo e a Estrutura Base
+            // CORREÇÃO: A tag <img> estava sendo injetada como HTML inválido ou com elementos quebrados. 
+            // Garante que a string do logo seja uma única tag HTML completa para correta injeção no DOM.
+            const logoHtml = `
+                <div class="absolute top-4 right-4 z-10">
+                    <img 
+                        src="${LOGO_SRC}" 
+                        alt="Logo UNEMAT Ciência da Computação" 
+                        class="h-20"  
+                        onerror="this.onerror=null; this.src='https://placehold.co/150x64/FFFFFF/000000?text=LOGO';"
+                    />
+                </div>
+            `;
+            
+            // 2. Renderiza o Header do Slide
+            const headerHtml = `
+                <div class="p-6 border-b-2 border-gray-100 flex items-center ${slide.color} transition-colors duration-500">
+                    ${slide.icon}
+                    <div class="ml-4">
+                        <h2 class="text-3xl font-bold text-gray-800">${slide.title}</h2>
+                        <p class="text-xl text-gray-500">${slide.subtitle}</p>
+                    </div>
+                </div>
+            `;
+
+            // 3. Renderiza o Conteúdo Principal
+            const contentHtml = `
+                <div class="flex-grow p-8 overflow-y-auto slide-content">
+                    ${slide.content}
+                </div>
+            `;
+            
+            // 4. Renderiza o Rodapé (se existir)
+            const footerHtml = slide.footer ? `
+                <div class="p-4 bg-gray-100 text-sm text-gray-600 text-right border-t">
+                    ${slide.footer}
+                </div>
+            ` : '';
+            
+            // 5. Renderiza os Indicadores de Navegação
+            const indicators = slideData.map((_, index) => {
+                const isActive = currentSlide === index;
+                const baseClass = 'w-3 h-3 rounded-full transition-colors duration-300 shadow-sm';
+                const activeClass = isActive ? 'bg-blue-600 ring-4 ring-blue-200' : 'bg-gray-300 hover:bg-gray-400';
+                return `<button
+                    onclick="goToSlide(${index})"
+                    class="${baseClass} ${activeClass}"
+                    aria-label="Ir para o slide ${index + 1}"
+                ></button>`;
+            }).join('');
+            
+            // 6. Renderiza os Botões Anterior/Próximo
+            const prevDisabled = currentSlide === 0;
+            const nextDisabled = currentSlide === totalSlides - 1;
+
+            const prevButtonClass = prevDisabled
+                ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                : 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg transform hover:scale-[1.01]';
+            const nextButtonClass = nextDisabled
+                ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                : 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg transform hover:scale-[1.01]';
+
+            const navHtml = `
+                <div class="p-4 bg-white border-t-2 border-gray-100 flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
+                    <button
+                        onclick="goToPrevious()"
+                        ${prevDisabled ? 'disabled' : ''}
+                        class="flex items-center px-6 py-2 rounded-xl font-semibold transition duration-300 w-full md:w-auto justify-center ${prevButtonClass}"
+                    >
+                        ${renderIcon('ChevronLeft', 'w-5 h-5 mr-2')} Anterior
+                    </button>
+                    <div class="flex space-x-2">
+                        ${indicators}
+                    </div>
+                    <button
+                        onclick="goToNext()"
+                        ${nextDisabled ? 'disabled' : ''}
+                        class="flex items-center px-6 py-2 rounded-xl font-semibold transition duration-300 w-full md:w-auto justify-center ${nextButtonClass}"
+                    >
+                        Próximo ${renderIcon('ChevronRight', 'w-5 h-5 ml-2')}
+                    </button>
+                </div>
+            `;
+            
+            // Combina e injeta todo o HTML
+            root.innerHTML = logoHtml + headerHtml + contentHtml + footerHtml + navHtml;
+            slideInfo.textContent = `Slide ${currentSlide + 1} de ${totalSlides}`;
+        }
+
+        window.goToNext = goToNext;
+        window.goToPrevious = goToPrevious;
+        window.goToSlide = goToSlide;
+
+        // Inicia a renderização
+        window.onload = render;
+    </script>
+</body>
+</html>

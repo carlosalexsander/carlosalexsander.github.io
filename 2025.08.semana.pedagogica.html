@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordenação do Curso de Bacharelado em Ciência da Computação</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            padding: 40px;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideIn 0.8s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide:nth-child(even) {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #34495e;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            color: #2980b9;
+            margin: 20px 0 15px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        h3::before {
+            content: "🔹";
+            margin-right: 10px;
+        }
+
+        .intro-slide {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .intro-slide h1 {
+            color: white;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            -webkit-text-fill-color: white;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .logo-container img {
+            max-height: 140px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .presenter-info {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .objective-card {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .objective-card:hover {
+            transform: translateX(10px);
+        }
+
+        .day-schedule {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .day-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .day-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .day-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 10px;
+        }
+
+        .slide-item {
+            background: rgba(255,255,255,0.1);
+            margin: 8px 0;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border-left: 4px solid rgba(255,255,255,0.5);
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+        }
+
+        .slide-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+
+        .slide-number-ref {
+            font-weight: bold;
+            color: #FFD700;
+            margin-right: 8px;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .timeline-item {
+            background: #667eea;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 5px;
+            flex: 1;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .metrics-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: scale(1);
+        }
+
+        .metric-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .action-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .action-list li {
+            background: rgba(102, 126, 234, 0.1);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .action-list li:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: translateX(5px);
+        }
+
+        .action-list li::before {
+            content: "✓";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .emphasis {
+            background: linear-gradient(45deg, #f39c12, #e74c3c);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 30px 0;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .contact-info {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .return-to-agenda {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.3s ease;
+            z-index: 999;
+        }
+        
+        .return-to-agenda:hover {
+            background: #34495e;
+        }
+
+        .navigation {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: #667eea;
+            transform: scale(1.3);
+        }
+
+        .competencias-list {
+            list-style: none;
+            padding: 0;
+            font-size: 0.9em;
+        }
+
+        .competencias-list li {
+            background: rgba(102, 126, 234, 0.05);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .competencias-list li:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(3px);
+        }
+
+        .competencias-list li::before {
+            content: "▸";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .deadline-alert {
+            background-color: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .slide {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.5em; }
+
+            .day-schedule {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline {
+                flex-direction: column;
+            }
+
+            .navigation {
+                display: none;
+            }
+
+            .intro-slide h1 {
+                font-size: 2.2em;
+            }
+
+            .logo-container img {
+                max-height: 60px;
+            }
+            .return-to-agenda {
+                bottom: 10px;
+                left: 10px;
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+        }
+
+        @media print {
+            body { background: white !important; }
+            .slide {
+                page-break-after: always;
+                box-shadow: none;
+                margin-bottom: 0;
+                background: white !important;
+            }
+            .navigation, .slide-number { display: none; }
+            .intro-slide { background: #667eea !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+
+        <div class="slide intro-slide" id="slide1">
+            <div class="slide-number">1/22</div>
+            <div class="logo-container">
+                <img src="logo_unemat_bcc_horizontal_fundo_preto_texto_branco.png" alt="Logo UNEMAT BCC">
+            </div>
+            <h1>🎓 Coordenação do Curso de Bacharelado em Ciência da Computação</h1>
+            <div class="subtitle">UNEMAT - Alto Araguaia & Rondonópolis</div>
+            <div class="presenter-info">
+                <h2 style="color: white; border: none; margin-bottom: 15px;">Carlos Alex Sander Juvêncio Gulo</h2>
+                <p style="font-size: 1.1em;">Semana Pedagógica 2025/2</p>
+                <p><strong>4, 5 e 6 de Agosto de 2025 | 14h às 17h</strong></p>
+            </div>
+        </div>
+
+        <div class="slide" id="slide2">
+            <div class="slide-number">2/22</div>
+            <h2>📅 Agenda </h2>
+            <div class="day-schedule">
+                <div class="day-card">
+                    <div class="day-title">📅 DIA 4 - AGOSTO</div>
+                    <a href="#slide3" class="slide-item"><span class="slide-number-ref">Slide 3:</span>Quem Sou Eu</a>
+                    <a href="#slide4" class="slide-item"><span class="slide-number-ref">Slide 4:</span>Competências do Coordenador</a>
+                    <a href="#slide5" class="slide-item"><span class="slide-number-ref">Slide 5:</span>Filosofia de Gestão</a>
+                    <a href="#slide6" class="slide-item"><span class="slide-number-ref">Slide 6:</span>Apoio Mútuo entre Docentes</a>
+                    <a href="#slide7" class="slide-item"><span class="slide-number-ref">Slide 7:</span>Gestão Participativa</a>
+                    <a href="#slide8" class="slide-item"><span class="slide-number-ref">Slide 8:</span>Representantes de Turma</a>
+                    <a href="#slide9" class="slide-item"><span class="slide-number-ref">Slide 9:</span>Cuidado com Estudantes</a>
+                    <a href="#slide10" class="slide-item"><span class="slide-number-ref">Slide 10:</span>Aproximação do Mercado</a>
+                </div>
+                <div class="day-card">
+                    <div class="day-title">📅 DIA 5 - AGOSTO</div>
+                    <a href="#slide11" class="slide-item"><span class="slide-number-ref">Slide 11:</span>Identidade Visual</a>
+                    <a href="#slide12" class="slide-item"><span class="slide-number-ref">Slide 12:</span>SECOMP 2025</a>
+                    <a href="#slide13" class="slide-item"><span class="slide-number-ref">Slide 13:</span>Instagram Oficial</a>
+                    <a href="#slide14" class="slide-item"><span class="slide-number-ref">Slide 14:</span>Compartilhar Postagens</a>
+                    <a href="#slide15" class="slide-item"><span class="slide-number-ref">Slide 15:</span>Projeto "Conheça seu Professor"</a>
+                </div>
+                <div class="day-card">
+                    <div class="day-title">📅 DIA 6 - AGOSTO</div>
+                    <a href="#slide16" class="slide-item"><span class="slide-number-ref">Slide 16:</span>Apresentação Projetos Docentes</a>
+                    <a href="#slide17" class="slide-item"><span class="slide-number-ref">Slide 17:</span>TCC - Repositório e Defesas</a>
+                    <a href="#slide18" class="slide-item"><span class="slide-number-ref">Slide 18:</span>Desmodularização</a>
+                    <a href="#slide19" class="slide-item"><span class="slide-number-ref">Slide 19:</span>Curso Tecnólogo</a>
+                    <a href="#slide20" class="slide-item"><span class="slide-number-ref">Slide 20:</span>Planejamento</a>
+                    <a href="#slide21" class="slide-item"><span class="slide-number-ref">Slide 21:</span>Próximos Passos</a>
+                    <a href="#slide22" class="slide-item"><span class="slide-number-ref">Slide 22:</span>Agradecimento</a>
+                </div>
+            </div>
+            <div class="emphasis">🎯 <strong>Objetivo:</strong> Continuar construindo coletivamente o futuro do nosso curso!</div>
+        </div>
+
+        <div class="slide" id="slide3">
+            <div class="slide-number">3/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>👨‍🎓 Quem Sou Eu</h2>
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>🎓 Minha Trajetória</h3>
+                    <p>Doutor em Engenharia Informática com paixão pela Computação, Tecnologia e Troca de Ideias</p>
+                </div>
+                <div class="objective-card">
+                    <h3>💡 Nossa Visão</h3>
+                    <p>Continuar construindo juntos uma liderança colaborativa que valoriza cada pessoa da nossa comunidade</p>
+                </div>
+                <div class="objective-card">
+                    <h3>🤲 Meu Compromisso</h3>
+                    <p>Facilitar processos participativos onde todos tenham voz e contribuam com sua expertise</p>
+                </div>
+            </div>
+            <div class="emphasis">"Meu papel é facilitar e apoiar, não dirigir. Cada um de vocês tem uma expertise única que é fundamental para o sucesso coletivo."</div>
+        </div>
+
+        <div class="slide" id="slide4">
+            <div class="slide-number">4/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>📋 Competências do Coordenador de Curso</h2>
+            <p style="text-align: center; margin-bottom: 20px;"><em>Conforme Art. 63 do Estatuto da UNEMAT (Resolução nº 002/2012 – CONCUR)</em></p>
+            <ul class="competencias-list">
+                <li>Administrar o Curso</li>
+                <li>Convocar e presidir as reuniões do Colegiado de Curso</li>
+                <li>Tomar providências administrativas, financeiras, disciplinares e didático-científica-pedagógicas</li>
+                <li>Submeter à apreciação do Colegiado o plano de atividades do curso</li>
+                <li>Encaminhar informações para elaboração de planos de trabalho e orçamento</li>
+                <li>Apresentar relatório de avaliação das atividades do curso</li>
+                <li>Distribuir as ações de ensino e supervisionar atividades</li>
+                <li>Controlar assiduidade do pessoal docente</li>
+                <li>Cumprir e fazer cumprir calendário acadêmico e planos de ensino</li>
+                <li>Encaminhar substituições de docentes</li>
+                <li>Responsabilizar-se pelos bens patrimoniais do Curso</li>
+                <li>Regularizar cursos através de documentação para autorização/reconhecimento</li>
+                <li>Encaminhar levantamento de vagas existentes</li>
+                <li>Adotar medidas essenciais à eficiência do Curso</li>
+            </ul>
+        </div>
+
+        <div class="slide" id="slide5">
+            <div class="slide-number">5/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>🌟 Filosofia de Gestão</h2>
+            <h3>🤝 Liderança Colaborativa</h3>
+            <ul class="action-list">
+                <li>Reconhecimento da experiência e conhecimento únicos de cada colega</li>
+                <li>Facilitação de processos onde todos se sintam confortáveis para contribuir</li>
+                <li>Criação de espaços seguros para compartilhamento de ideias e desafios</li>
+            </ul>
+            <h3>👥 Construção Coletiva</h3>
+            <ul class="action-list">
+                <li>Decisões tomadas sempre com base no diálogo e consenso</li>
+                <li>Transparência em todos os processos e informações</li>
+                <li>Valorização das diferentes perspectivas e experiências</li>
+            </ul>
+            <h3>📊 Coordenação como Facilitação</h3>
+            <ul class="action-list">
+                <li>Apoio aos colegas para que cada um possa brilhar em sua área</li>
+                <li>Organização e sistematização das iniciativas coletivas</li>
+                <li>Disponibilidade constante para escuta e suporte</li>
+            </ul>
+        </div>
+
+        <div class="slide" id="slide6">
+            <div class="slide-number">6/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>👨‍🏫 Apoio Mútuo entre Docentes</h2>
+            <h3>🎓 Espaços de Troca Colaborativa</h3>
+            <ul class="action-list">
+                <li><strong>Conversas sobre ensino:</strong> Trocas informais sobre metodologias que funcionam</li>
+                <li><strong>Apoio tecnológico:</strong> Quem tem expertise ajuda quem tem interesse</li>
+                <li><strong>Reflexões pedagógicas:</strong> Momentos para pensarmos juntos sobre educação</li>
+                <li><strong>Suporte mútuo:</strong> Rede de apoio entre colegas para desafios do dia a dia</li>
+            </ul>
+            <h3>🌐 Comunidade de Prática</h3>
+            <ul class="action-list">
+                <li>Espaço (físico e digital) para compartilhar materiais e ideias</li>
+                <li><strong>Encontros mensais programados</strong> para troca de experiências</li>
+                <li><strong>Documentação sistemática</strong> de práticas que deram certo</li>
+                <li>Valorização da experiência acumulada de cada colega</li>
+            </ul>
+        </div>
+
+        <div class="slide" id="slide7">
+            <div class="slide-number">7/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>👥 Gestão Participativa - Definições</h2>
+            <h3>📅 Nossos Encontros Mensais</h3>
+            <div class="objective-card">
+                <p><strong>📍 Quando:</strong> Última semana de cada mês</p>
+                <p><strong>⏰ Horário:</strong> Vamos combinar agora?</p>
+                <p><strong>📍 Como:</strong> Presencial quando possível, remoto quando necessário</p>
+                <p><strong>📋 Pauta:</strong> Construída coletivamente com sugestões de todos</p>
+            </div>
+            <h3>🏢 Presença no Campus</h3>
+            <ul class="action-list">
+                <li><strong>1 semana por mês</strong> dedicada integralmente ao campus</li>
+                <li><strong>Porta sempre aberta</strong> para estudantes e colegas</li>
+                <li><strong>Disponibilidade</strong> para conversas individuais quando necessário</li>
+                <li><strong>Participação ativa</strong> na vida acadêmica da nossa comunidade</li>
+            </ul>
+        </div>
+
+        <div class="slide" id="slide8">
+            <div class="slide-number">8/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>👥 Representantes de Turma</h2>
+            <h3>🤲 Fortalecendo a Escuta Ativa</h3>
+            <ul class="action-list">
+                <li>Retomada do sistema de líderes e vice-líderes em cada turma</li>
+                <li>Canal direto entre estudantes e coordenação</li>
+                <li>Reuniões periódicas para ouvir demandas e propor soluções</li>
+                <li>Protagonismo estudantil e construção coletiva do ambiente acadêmico</li>
+            </ul>
+            <h3>🎯 Objetivo</h3>
+            <p>Garantir que todas as vozes sejam ouvidas e que as necessidades de cada turma sejam rapidamente encaminhadas.</p>
+        </div>
+
+        <div class="slide" id="slide9">
+            <div class="slide-number">9/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>🎯 Cuidado com Nossos Estudantes</h2>
+            <h3>📚 Rede de Apoio Acadêmico</h3>
+            <ul class="action-list">
+                <li><strong>Monitorias humanizadas</strong> nas disciplinas mais desafiadoras</li>
+                <li><strong>Grupos de estudo</strong> onde estudantes se ajudam mutuamente</li>
+                <li><strong>Oficinas de nivelamento</strong> para quem precisa de apoio extra</li>
+                <li><strong>Materiais complementares</strong> disponíveis para todos</li>
+            </ul>
+            <h3>🤗 Ambiente Acolhedor</h3>
+            <ul class="action-list">
+                <li>Recepção carinhosa para quem está chegando</li>
+                <li>Conexão entre veteranos e novatos</li>
+                <li>Eventos de integração que celebram nossa diversidade</li>
+                <li><strong>Estreitamento dos laços com a CAEST</strong></li>
+            </ul>
+        </div>
+
+        <div class="slide" id="slide10">
+            <div class="slide-number">10/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>🏢 Aproximação do Mercado de Trabalho</h2>
+            <div class="metrics-container">
+                <div class="metric-card">
+                    <div class="metric-number">5+</div>
+                    <div>Parcerias com Empresas Regionais</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">SECOMP</div>
+                    <div>Vitrine dos Nossos Talentos</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">8+</div>
+                    <div>Palestras com Profissionais</div>
+                </div>
+            </div>
+            <h3>💼 Oportunidades Reais</h3>
+            <ul class="action-list">
+                <li><strong>Portal colaborativo</strong> onde todos podem contribuir com oportunidades</li>
+                <li><strong>Preparação conjunta</strong> para entrevistas e seleções</li>
+                <li><strong>Orientação de carreira</strong> baseada na experiência coletiva</li>
+                <li><strong>Rede de contatos</strong> que beneficia toda a comunidade</li>
+            </ul>
+        </div>
+
+        <div class="slide" id="slide11">
+            <div class="slide-number">11/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>🎨 Atualização da Identidade Visual</h2>
+            <h3>🎉 Valorizando Nossa História</h3>
+            <p>Proposta de atualização respeitosa da nossa identidade visual, mantendo a essência que nos representa</p>
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>🎯 Objetivos</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>🔄 Atualizar materiais visuais existentes</li>
+                        <li>📏 Criar padrões consistentes</li>
+                        <li>🎊 Fortalecer nossa identidade</li>
+                        <li>🏆 Celebrar nossa trajetória</li>
+                    </ul>
+                </div>
+                <div class="objective-card">
+                    <h3>📋 Entregas</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>🎨 Materiais atualizados</li>
+                        <li>📖 Manual de aplicação</li>
+                        <li>🎯 Templates para eventos</li>
+                        <li>🎉 Visual especial SECOMP 2025</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="emphasis">🎊 <strong>Evento de Relançamento:</strong> Celebração dos 18 anos do curso com identidade visual atualizada!</div>
+        </div>
+
+        <div class="slide" id="slide12">
+            <div class="slide-number">12/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>🎊 SECOMP 2025 - Nossa Grande Vitrine</h2>
+            <h3>🎯 Importância Estratégica</h3>
+            <ul class="action-list">
+                <li><strong>Outubro:</strong> Momento especial para mostrar nossos diferenciais</li>
+                <li><strong>Visibilidade:</strong> Atrair empresas e oportunidades para nossos estudantes</li>
+                <li><strong>Integração:</strong> Fortalecer laços entre comunidade acadêmica e sociedade</li>
+                <li><strong>Celebração:</strong> Reconhecer conquistas de toda nossa comunidade</li>
+            </ul>
+            <h3>👥 Distribuição de Tarefas</h3>
+            <ul class="action-list">
+                <li><strong>Participação de todos:</strong> Cada colega contribuindo com sua expertise</li>
+                <li><strong>Grupos temáticos:</strong> Organização por áreas de interesse</li>
+                <li><strong>Cronograma estruturado:</strong> Definições claras de responsabilidades</li>
+                <li><strong>Reconhecimento:</strong> Valorização de todas as contribuições</li>
+            </ul>
+            <div class="emphasis">🚀 <strong>IMPORTANTE:</strong> A organização da SECOMP 2025 inicia no primeiro dia de reunião!</div>
+        </div>
+
+        <div class="slide" id="slide13">
+            <div class="slide-number">13/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>📱 Instagram Oficial do Curso</h2>
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>📱 Perfil Proposto</h3>
+                    <p><strong>@computacao.unemataia</strong></p>
+                    <p>Bio: "Ciência da Computação UNEMAT Alto Araguaia 🎓 | Formando profissionais para o futuro da tecnologia 💻 | #ComputacaoUNEMAT"</p>
+                </div>
+                <div class="objective-card">
+                    <h3>📋 Estratégia de Conteúdo</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>🎬 Apresentações dos colegas docentes</li>
+                        <li>🔬 Projetos e conquistas do curso</li>
+                        <li>🎉 Nossos eventos (SECOMP e Workshop)</li>
+                        <li>💼 Sucesso dos nossos egressos</li>
+                        <li>📚 Dicas e conteúdo educativo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="emphasis">🎯 <strong>Quem vai ficar responsável?</strong> Definiremos na primeira reunião!</div>
+        </div>
+
+        <div class="slide" id="slide14">
+            <div class="slide-number">14/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>🤝 Compartilhar Postagens: Grupos/Laboratórios</h2>
+            <h3>🎯 Estratégia de Amplificação</h3>
+            <ul class="action-list">
+                <li><strong>Engajamento coletivo:</strong> Todos os grupos e laboratórios compartilhando conteúdo</li>
+                <li><strong>Alcance multiplicado:</strong> Cada compartilhamento expande nossa visibilidade</li>
+                <li><strong>Fortalecimento da marca:</strong> Presença consistente nas redes sociais</li>
+                <li><strong>Comunidade ativa:</strong> Demonstrar união e colaboração</li>
+            </ul>
+            <h3>🎊 Benefícios</h3>
+            <ul class="action-list">
+                <li><strong>Visibilidade ampliada</strong> para todos os projetos</li>
+                <li><strong>Fortalecimento mútuo</strong> entre grupos</li>
+                <li><strong>Atração de novos estudantes</strong> interessados</li>
+                <li><strong>Reconhecimento institucional</strong> do trabalho coletivo</li>
+            </ul>
+        </div>
+
+        <div class="slide" id="slide15">
+            <div class="slide-number">15/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>🎬 Projeto "Conheça seu Professor"</h2>
+            <h3>🎯 Objetivo</h3>
+            <p>Dar visibilidade ao talento e expertise únicos que cada colega traz para nosso curso</p>
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>📝 Formato Sugerido (3 min)</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>👋 Apresentação confortável</li>
+                        <li>🎓 Trajetória que desejar compartilhar</li>
+                        <li>📚 Disciplinas que mais gosta de trabalhar</li>
+                        <li>🔬 Projetos ou áreas de interesse</li>
+                        <li>💡 O que mais o motiva no ensino</li>
+                        <li>📞 Como os alunos podem se aproximar</li>
+                    </ul>
+                </div>
+                <div class="objective-card">
+                    <h3>📅 Cronograma</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>🎬 <strong>Agosto-Setembro:</strong> Início das gravações</li>
+                        <li>📱 <strong>Outubro:</strong> Aproveitar a SECOMP</li>
+                        <li>🔄 <strong>Nov-Dez:</strong> Completar o projeto</li>
+                        <li>📊 <strong>Contínuo:</strong> Manutenção do conteúdo</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="emphasis">💡 <strong>Participação esperada:</strong> Cada colega contribuindo com sua apresentação!</div>
+        </div>
+
+        <div class="slide" id="slide16">
+            <div class="slide-number">16/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>🔬 Apresentação de Projetos Docentes</h2>
+            <h3>🎯 Objetivo</h3>
+            <p>Conhecer e valorizar os projetos de pesquisa, extensão e ensino desenvolvidos por cada colega</p>
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>⏰ Formato</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>🕐 <strong>5 minutos por docente</strong></li>
+                        <li>📊 Apresentação objetiva</li>
+                        <li>💡 Foco nos resultados e impactos</li>
+                        <li>🤝 Oportunidades de colaboração</li>
+                    </ul>
+                </div>
+                <div class="objective-card">
+                    <h3>📋 Conteúdo Sugerido</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>🔬 <strong>Pesquisa:</strong> Linhas e resultados</li>
+                        <li>🌍 <strong>Extensão:</strong> Projetos e comunidade</li>
+                        <li>📚 <strong>Ensino:</strong> Metodologias inovadoras</li>
+                        <li>🎯 <strong>Perspectivas:</strong> Próximos passos</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="emphasis">🎯 <strong>Cronograma:</strong> Definiremos a ordem e horários na primeira reunião!</div>
+        </div>
+
+        <div class="slide" id="slide17">
+            <div class="slide-number">17/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>📚 TCC - Repositório e Defesas</h2>
+            <h3>🎯 Organização do Repositório</h3>
+            <ul class="action-list">
+                <li><strong>Sistematização</strong> de todos os TCCs defendidos</li>
+                <li><strong>Catalogação</strong> por área de conhecimento</li>
+                <li><strong>Disponibilização</strong> para consulta da comunidade</li>
+                <li><strong>Preservação</strong> da memória acadêmica do curso</li>
+            </ul>
+            <h3>💡 Melhorias Propostas</h3>
+            <ul class="action-list">
+                <li><strong>Plataforma digital</strong> para acesso aos trabalhos</li>
+                <li><strong>Sessões de apresentação</strong> para a comunidade</li>
+                <li><strong>Conexão com empresas</strong> para TCCs aplicados</li>
+                <li><strong>Premiação</strong> dos trabalhos de destaque</li>
+            </ul>
+        </div>
+
+        <div class="slide" id="slide18">
+            <div class="slide-number">18/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>🔄 Desmodularização do Curso</h2>
+            <h3>🎯 Por que Desmodularizar?</h3>
+            <p><strong>Contexto Atual:</strong> 20 horas da mesma disciplina por semana (4h diárias)</p>
+            <ul class="action-list">
+                <li><strong>Reduzir a sobrecarga cognitiva</strong> de 4 horas diárias da mesma matéria</li>
+                <li><strong>Melhorar a assimilação do conteúdo</strong> com distribuição temporal mais adequada</li>
+                <li><strong>Permitir maior diversidade de disciplinas</strong> simultâneas no semestre</li>
+                <li><strong>Facilitar o processo de aprendizagem</strong> com intervalos para sedimentação</li>
+                <li><strong>Aumentar a motivação estudantil</strong> com variação de conteúdos no dia</li>
+                <li><strong>Reduzir a evasão</strong> causada pela intensidade excessiva do formato modular</li>
+            </ul>
+            <div class="deadline-alert">⏰ <strong>PRAZO IMPORTANTE:</strong> Decisão até 30/09/2025</div>
+        </div>
+
+        <div class="slide" id="slide19">
+            <div class="slide-number">19/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>🎓 Proposta de Curso Tecnólogo</h2>
+            <h3>📋 Contexto SECITECI - Verticalização</h3>
+            <p>Demanda da Secretaria para verticalização do ensino, alinhada aos cursos técnicos da ETEC Rondonópolis</p>
+            <div class="objectives-grid">
+                <div class="objective-card">
+                    <h3>🎯 Cursos Técnicos ETEC</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>💻 Desenvolvimento de Sistemas</li>
+                        <li>🦺 Segurança do Trabalho</li>
+                        <li>📊 Administração</li>
+                        <li>🌱 Agricultura</li>
+                        <li>👥 Recursos Humanos</li>
+                        <li>🏗️ Edificações</li>
+                    </ul>
+                </div>
+                <div class="objective-card">
+                    <h3>🎓 Tecnólogos Propostos</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>🤖 Inteligência Artificial</li>
+                        <li>📊 Ciência de Dados</li>
+                        <li>🔒 Cibersegurança</li>
+                        <li>☁️ Computação em Nuvem</li>
+                        <li>🎮 Desenvolvimento de Jogos</li>
+                        <li>📱 Desenvolvimento Mobile</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="deadline-alert">⏰ <strong>PRAZO IMPORTANTE:</strong> Definição até 30/09/2025</div>
+        </div>
+
+        <div class="slide" id="slide20">
+            <div class="slide-number">20/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>📅 Planejamento Próximos Meses</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3 style="color: white; margin: 0;">AGOSTO</h3>
+                    <p>• Nossos primeiros passos</p>
+                    <p>• Instagram oficial</p>
+                    <p>• Primeiros vídeos</p>
+                    <p>• Início SECOMP 2025</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 style="color: white; margin: 0;">SETEMBRO</h3>
+                    <p>• Preparação SECOMP</p>
+                    <p>• Fortalecimento parcerias</p>
+                    <p>• Acompanhamento estudantes</p>
+                    <p><strong>• PRAZO: 30/9 - Decisões importantes</strong></p>
+                </div>
+                <div class="timeline-item">
+                    <h3 style="color: white; margin: 0;">OUTUBRO</h3>
+                    <p>• SECOMP 2025! 🎉</p>
+                    <p>• Showcase do curso</p>
+                    <p>• Avaliação coletiva</p>
+                </div>
+                <div class="timeline-item">
+                    <h3 style="color: white; margin: 0;">NOVEMBRO</h3>
+                    <p>• Continuidade projetos</p>
+                    <p>• Preparação 2026</p>
+                    <p>• Celebração conquistas</p>
+                </div>
+            </div>
+            <div class="deadline-alert">⏰ <strong>MARCO IMPORTANTE:</strong> 30/09 - Definições sobre Desmodularização e Curso Tecnólogo</div>
+        </div>
+
+        <div class="slide" id="slide21">
+            <div class="slide-number">21/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h2>🚀 Próximos Passos e Compromissos</h2>
+            <h3>📋 O que Vamos Decidir Juntos</h3>
+            <ul class="action-list">
+                <li><strong>Aprovação coletiva</strong> das propostas apresentadas</li>
+                <li><strong>Formação</strong> de grupos de interesse</li>
+                <li><strong>Cronograma realista</strong> que respeita disponibilidades</li>
+                <li><strong>Canais de comunicação</strong> que funcionem para todos</li>
+            </ul>
+            <h3>🤝 Nosso Compromisso Mútuo</h3>
+            <div class="emphasis">"Juntos, vamos continuar cuidando do nosso curso e de nossa comunidade, respeitando o tempo e contribuição de cada pessoa, celebrando nossos sucessos coletivos!"</div>
+            <div class="contact-info">
+                <h3 style="color: white; margin-bottom: 15px;">📞 Como Me Encontrar</h3>
+                <p>📧 E-mail: sander@unemat.br</p>
+                <p>📱 WhatsApp: (66) 999 226488</p>
+                <p>📍 Uma semana por mês no campus</p>
+                <p>🕐 Sempre disponível para conversar e buscar soluções</p>
+            </div>
+        </div>
+
+        <div class="slide intro-slide" id="slide22">
+            <div class="slide-number">22/22</div>
+            <a href="#slide2" class="return-to-agenda">↩️ Voltar para a Agenda</a>
+            <h1>Obrigado!</h1>
+            <div style="font-size: 1.3em; margin-bottom: 40px;">Vamos continuar construindo juntos o futuro do nosso curso!</div>
+            <div class="presenter-info">
+                <h2 style="color: white; border: none; margin-bottom: 15px;">💫 Gratidão e Expectativa</h2>
+                <p style="font-size: 1.2em; margin-bottom: 20px;">Obrigado pela confiança, pelo acolhimento e pela disposição em construirmos juntos!</p>
+                <p style="font-size: 1.1em;">🤝 Que nossa jornada seja de muito aprendizado, colaboração e conquistas coletivas!</p>
+            </div>
+            <div class="contact-info">
+                <h3 style="color: white; margin-bottom: 15px;">📞 Contato</h3>
+                <p>📧 sander@unemat.br</p>
+                <p>📱 (66) 999 226488</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.slide-item').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
