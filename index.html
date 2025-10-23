@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prof. Dr. Carlos Alex Sander Juvêncio Gulo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f7fa;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 3rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .profile-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid rgba(255,255,255,0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            object-fit: cover;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .header-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .header-text h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header-text .title {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .header-text .institution {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 1rem;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav ul li a:hover {
+            color: #2a5298;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(30, 60, 114, 0.95), rgba(42, 82, 152, 0.95)), url('https://placehold.co/1200x400/1e3c72/ffffff?text=Pesquisa+e+Inovação') center/cover;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .section {
+            padding: 5rem 0;
+            min-height: 60vh;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            color: #1e3c72;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        .presentations-section {
+            background: white;
+            padding: 5rem 0;
+        }
+
+        .presentation-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .presentation-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .presentation-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .presentation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        }
+
+        .presentation-card i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .presentation-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .presentation-card p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+        }
+
+        .presentation-card .btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .presentation-card .btn:hover {
+            background: #f0f0f0;
+            transform: scale(1.05);
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            min-width: 200px;
+        }
+
+        .contact-item i {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: #1a2f5a;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .header-text h1 {
+                font-size: 2rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .presentation-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <img src="https://placehold.co/180x180/2a5298/ffffff?text=CAG" alt="Prof. Carlos Alex" class="profile-photo">
+                <div class="header-text">
+                    <h1>Prof. Dr. Carlos Alex Sander Juvêncio Gulo</h1>
+                    <p class="title">Coordenador do Curso de Ciência da Computação</p>
+                    <p class="institution">
+                        <i class="fas fa-university"></i>
+                        UNEMAT - Alto Araguaia e Rondonópolis
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home"></i> Início</a></li>
+            <li><a href="sobre.html"><i class="fas fa-user"></i> Sobre</a></li>
+            <li><a href="formacao.html"><i class="fas fa-graduation-cap"></i> Formação</a></li>
+            <li><a href="atuacao.html"><i class="fas fa-briefcase"></i> Atuação</a></li>
+            <li><a href="pos-graduacao.html"><i class="fas fa-book"></i> Pós-Graduação</a></li>
+            <li><a href="contato.html"><i class="fas fa-envelope"></i> Contato</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Educador em Inteligência Artificial</h2>
+            <p>Desenvolvendo metodologias inovadoras para democratizar o ensino de IA e promover a alfabetização digital</p>
+        </div>
+    </section>
+
+    <section class="presentations-section">
+        <div class="container">
+            <h2 class="section-title">Reuniões</h2>
+            <div class="presentation-cards">
+                <div class="presentation-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Apresentação da Coordenação</h3>
+                    <p>Semana Pedagógica 2025/2 - Filosofia de gestão colaborativa e planejamento estratégico do curso</p>
+                    <a href="2025.08.semana.pedagogica.html" class="btn" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> Acessar Apresentação
+                    </a>
+                </div>
+                <div class="presentation-card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Reunião Outubro 2025</h3>
+                    <p>PPE CC 2026 - Plano Pedagógico Estratégico com articulação entre Ensino, Pesquisa e Extensão</p>
+                    <a href="2025.10.reuniao.html" class="btn" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> Acessar Apresentação
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Prof. Dr. Carlos Alex Sander Juvêncio Gulo</p>
+            <p>Professor Adjunto - UNEMAT | Coordenador de Ciência da Computação</p>
+        </div>
+    </footer>
+</body>
+</html>
