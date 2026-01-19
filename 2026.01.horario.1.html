@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCC 2026/1 - Painel do Estudante</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9', // Sky 500
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                            950: '#082f49',
+                        },
+                        dark: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .nav-item.active {
+            background: rgba(14, 165, 233, 0.15);
+            color: #38bdf8;
+            border-right: 3px solid #38bdf8;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="bg-dark-900 text-slate-200 h-screen flex overflow-hidden selection:bg-brand-500 selection:text-white">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-dark-800 border-r border-slate-700 flex flex-col z-20 shadow-xl">
+        <!-- Header / Logo -->
+        <div class="p-6 flex flex-col items-center justify-center border-b border-slate-700/50">
+            <div class="w-20 h-20 mb-3 relative">
+                <!-- Logo Image Placeholder -->
+                <img src="logo_bcc_vertical_fundo_transparente_texto_branco.png" 
+                     alt="BCC Logo" 
+                     class="w-full h-full object-contain drop-shadow-lg"
+                     onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex'">
+                
+                <div id="fallback-logo" class="hidden w-full h-full bg-brand-500/10 rounded-xl items-center justify-center border border-brand-500/20 text-brand-500 text-2xl">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+            </div>
+            <div class="text-center">
+                <h1 class="text-white font-bold text-lg tracking-tight">Ciência da Computação</h1>
+                <p class="text-xs text-slate-400 font-mono mt-1">Semestre 2026/1</p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
+            <p class="px-3 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Menu Principal</p>
+            
+            <button onclick="app.navigate('schedule')" id="nav-schedule" class="nav-item w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all">
+                <i class="fa-regular fa-calendar-days w-5 text-center"></i>
+                Grades Horárias
+            </button>
+
+            <button onclick="app.navigate('guide')" id="nav-guide" class="nav-item w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all">
+                <i class="fa-solid fa-book-open-reader w-5 text-center"></i>
+                Guia do Estudante
+            </button>
+            
+            <p class="px-3 text-xs font-bold text-slate-500 uppercase tracking-wider mt-6 mb-2">Externo</p>
+            
+            <a href="https://sigaa.unemat.br/sigaa/verTelaLogin.do" target="_blank" class="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-brand-500 hover:bg-slate-700/50 transition-all group">
+                <i class="fa-solid fa-globe w-5 text-center text-slate-500 group-hover:text-brand-500"></i>
+                Acessar SIGAA
+            </a>
+            
+            <a href="https://bit.ly/CalAcademico" target="_blank" class="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-brand-500 hover:bg-slate-700/50 transition-all group">
+                <i class="fa-solid fa-calendar-check w-5 text-center text-slate-500 group-hover:text-brand-500"></i>
+                Calendário Institucional
+            </a>
+        </nav>
+
+        <!-- Footer Info -->
+        <div class="p-4 bg-slate-900/50 border-t border-slate-700/50 text-xs">
+            <div class="flex items-center gap-2 text-brand-500 font-bold mb-2">
+                <i class="fa-solid fa-clock"></i> Atendimento (Seg-Sex)
+            </div>
+            <div class="space-y-2 text-slate-400">
+                <div class="flex justify-between">
+                    <span>Rondonópolis:</span>
+                    <span class="text-slate-200">07h - 11h30</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Alto Araguaia:</span>
+                    <span class="text-slate-200">12h - 18h00</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col min-w-0 bg-dark-900 relative">
+        
+        <!-- Header Mobile -->
+        <header class="md:hidden bg-dark-800 border-b border-slate-700 p-4 flex justify-between items-center">
+            <span class="font-bold text-white">BCC 2026/1</span>
+            <button class="text-slate-300"><i class="fa-solid fa-bars"></i></button>
+        </header>
+
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth" id="main-scroll">
+            
+            <!-- VIEW: SCHEDULE (Grades) -->
+            <div id="view-schedule" class="max-w-6xl mx-auto space-y-8 animate-fade-in">
+                
+                <!-- Campus Toggles -->
+                <div class="flex justify-center mb-8">
+                    <div class="bg-slate-800 p-1 rounded-xl inline-flex shadow-lg border border-slate-700">
+                        <button onclick="app.setCampus('AIA')" id="tab-aia" class="px-6 py-2 rounded-lg text-sm font-bold transition-all duration-200 flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot"></i> Alto Araguaia
+                        </button>
+                        <button onclick="app.setCampus('ROO')" id="tab-roo" class="px-6 py-2 rounded-lg text-sm font-bold transition-all duration-200 flex items-center gap-2">
+                            <i class="fa-solid fa-building-columns"></i> Rondonópolis
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Phase Tabs -->
+                <div class="overflow-x-auto pb-2">
+                    <div class="flex md:justify-center gap-2 min-w-max px-2" id="phase-tabs">
+                        <!-- JS injected -->
+                    </div>
+                </div>
+
+                <!-- Schedule Content -->
+                <div id="schedule-container" class="space-y-6">
+                    <!-- JS injected -->
+                </div>
+
+                <!-- Chart Section -->
+                <div class="glass-panel rounded-2xl p-6 mt-8">
+                    <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-simple text-brand-500"></i> Carga Horária Semanal
+                    </h3>
+                    <div class="chart-container mx-auto">
+                        <canvas id="workloadChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: STUDENT GUIDE -->
+            <div id="view-guide" class="hidden max-w-5xl mx-auto space-y-8 animate-fade-in">
+                
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-white mb-2">Guia do Estudante</h2>
+                    <p class="text-slate-400">Recursos, links e orientações essenciais para sua jornada.</p>
+                </div>
+
+                <!-- Welcome Card -->
+                <div class="bg-gradient-to-r from-brand-900/50 to-slate-800 rounded-2xl p-6 border-l-4 border-brand-500 shadow-lg">
+                    <h3 class="text-xl font-bold text-white mb-3">📢 Mensagem de Boas-vindas</h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        Caros(as) estudantes,<br>
+                        Sejam bem-vindos(as) à nossa comunidade acadêmica! 💙 Para apoiar sua jornada universitária, reunimos informações essenciais que vão facilitar seu dia a dia.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Card: Tutoriais -->
+                    <div class="glass-panel p-6 rounded-2xl hover:bg-slate-800/80 transition-colors">
+                        <div class="w-10 h-10 bg-blue-500/20 text-blue-400 rounded-lg flex items-center justify-center mb-4 text-xl">
+                            <i class="fa-solid fa-laptop-file"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-4">Tutoriais e Orientações</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li>
+                                <a href="https://bit.ly/tutoriaisSIGAA" target="_blank" class="flex justify-between items-center text-slate-300 hover:text-brand-400 group">
+                                    <span>Uso do SIGAA</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                </a>
+                            </li>
+                            <li class="border-t border-slate-700/50 pt-2">
+                                <a href="https://bit.ly/EstudanteNEE" target="_blank" class="flex justify-between items-center text-slate-300 hover:text-brand-400 group">
+                                    <span>Estudantes com NEE</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                </a>
+                            </li>
+                            <li class="border-t border-slate-700/50 pt-2">
+                                <a href="https://bit.ly/CAESTUnematAIA" target="_blank" class="flex justify-between items-center text-slate-300 hover:text-brand-400 group">
+                                    <span>CAEST – Assuntos Estudantis</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Card: PPCs -->
+                    <div class="glass-panel p-6 rounded-2xl hover:bg-slate-800/80 transition-colors">
+                        <div class="w-10 h-10 bg-purple-500/20 text-purple-400 rounded-lg flex items-center justify-center mb-4 text-xl">
+                            <i class="fa-solid fa-file-contract"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-4">Projetos Pedagógicos (PPC)</h3>
+                        <div class="space-y-3">
+                            <a href="http://www.unemat.br/resolucoes/resolucoes/conepe/5300_res_conepe_61_2023.pdf" target="_blank" class="block bg-slate-900/50 hover:bg-slate-700 p-3 rounded-lg border border-slate-700 hover:border-purple-500/50 transition-all group">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-semibold text-slate-200">Rondonópolis</span>
+                                    <i class="fa-solid fa-file-pdf text-slate-500 group-hover:text-purple-400"></i>
+                                </div>
+                            </a>
+                            <a href="https://www.unemat.br/resolucoes/resolucoes/conepe/5298_res_conepe_58_2023.pdf" target="_blank" class="block bg-slate-900/50 hover:bg-slate-700 p-3 rounded-lg border border-slate-700 hover:border-purple-500/50 transition-all group">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-semibold text-slate-200">Alto Araguaia</span>
+                                    <i class="fa-solid fa-file-pdf text-slate-500 group-hover:text-purple-400"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card: Rights -->
+                    <div class="md:col-span-2 bg-gradient-to-br from-indigo-900/40 to-slate-800 p-6 rounded-2xl border border-indigo-500/30 relative overflow-hidden">
+                        <div class="absolute right-0 top-0 p-6 opacity-5 pointer-events-none">
+                            <i class="fa-solid fa-scale-balanced text-9xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-indigo-300 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-gavel"></i> Direitos e Deveres
+                        </h3>
+                        <p class="text-slate-300 text-sm mb-4 max-w-2xl">
+                            Leitura essencial para alinhar expectativas. Contém regras sobre avaliações, notas, frequência, conduta e normas acadêmicas.
+                        </p>
+                        <a href="https://bit.ly/DireitoseDeveresUNEMAT" target="_blank" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg text-sm font-bold transition-shadow hover:shadow-lg hover:shadow-indigo-500/20">
+                            Ler Documento Oficial <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Card: Groups -->
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-users text-green-400"></i> Grupos de Discentes
+                        </h3>
+                        <div class="space-y-2 text-sm">
+                            <a href="https://bit.ly/FALECTDiscentes" target="_blank" class="flex items-center gap-3 p-2 hover:bg-slate-700 rounded transition-colors text-slate-300 hover:text-white">
+                                <i class="fa-brands fa-whatsapp text-green-500 text-lg"></i> FALECT (Faculdade)
+                            </a>
+                            <a href="https://bit.ly/BCCUNEMATAIA" target="_blank" class="flex items-center gap-3 p-2 hover:bg-slate-700 rounded transition-colors text-slate-300 hover:text-white">
+                                <i class="fa-brands fa-whatsapp text-green-500 text-lg"></i> Estudantes AIA
+                            </a>
+                            <a href="https://bit.ly/BCCUNEMATROO" target="_blank" class="flex items-center gap-3 p-2 hover:bg-slate-700 rounded transition-colors text-slate-300 hover:text-white">
+                                <i class="fa-brands fa-whatsapp text-green-500 text-lg"></i> Estudantes ROO
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card: Contacts -->
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-address-book text-pink-400"></i> Contatos
+                        </h3>
+                        <ul class="space-y-4 text-sm">
+                            <li class="flex gap-3">
+                                <div class="mt-1 text-slate-500"><i class="fa-solid fa-phone"></i></div>
+                                <div>
+                                    <div class="font-bold text-slate-200">Secretaria Acadêmica</div>
+                                    <div class="text-slate-400 font-mono">+55 66 9611-3334</div>
+                                </div>
+                            </li>
+                            <li class="flex gap-3">
+                                <div class="mt-1 text-green-500"><i class="fa-brands fa-whatsapp"></i></div>
+                                <div>
+                                    <div class="font-bold text-slate-200">WhatsApp do Campus</div>
+                                    <div class="text-slate-400 font-mono">+55 66 3481-1857</div>
+                                </div>
+                            </li>
+                            <li class="flex gap-3">
+                                <div class="mt-1 text-pink-500"><i class="fa-brands fa-instagram"></i></div>
+                                <div>
+                                    <div class="font-bold text-slate-200">Instagram</div>
+                                    <a href="https://bit.ly/computacaounemataia" target="_blank" class="text-brand-400 hover:underline">@computacao.unemataia</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // --- DATA ---
+        const data = {
+            'AIA': {
+                name: 'Alto Araguaia',
+                phases: [
+                    {
+                        id: 1, label: '1ª Fase', link: 'https://bit.ly/BCC1aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'IC', n: 'Introdução à Computação', p: 'Juvenal' },
+                            { d: 'Terça', c: 'PTL', n: 'Produção de Texto', p: 'Nasle' },
+                            { d: 'Quarta', c: 'MD', n: 'Matemática Discreta', p: 'Adriana' },
+                            { d: 'Quinta', c: 'FME', n: 'Fund. Mat. Elementar', p: 'Antonio' },
+                            { d: 'Sexta', c: 'II', n: 'Inglês Instrumental', p: 'A Definir' }
+                        ],
+                        modular: { c: 'ALP1', n: 'Algoritmos I', p: 'Lucas', d: '30/03 a 19/06' }
+                    },
+                    {
+                        id: 3, label: '3ª Fase', link: 'https://bit.ly/BCC3aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'IRC', n: 'Introdução a Redes', p: 'Wesley' },
+                            { d: 'Terça', c: 'AL', n: 'Álgebra Linear', p: 'Adriana' },
+                            { d: 'Quarta', c: 'TG', n: 'Teoria dos Grafos', p: 'Antonio' },
+                            { d: 'Quinta', c: 'ED1', n: 'Estrutura de Dados I', p: 'Lucas' },
+                            { d: 'Sexta', c: 'CA2', n: 'Cálculo II', p: 'Antonio' }
+                        ],
+                        modular: { c: 'FE', n: 'Fund. Eletrônica', p: 'Obana', d: '30/03 a 19/06' }
+                    },
+                    {
+                        id: 5, label: '5ª Fase', link: 'https://bit.ly/BCC5aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'PE', n: 'Prob. e Estatística', p: 'Adriana' },
+                            { d: 'Terça', c: 'GTI', n: 'Governança em TI', p: 'Juvenal' },
+                            { d: 'Quarta', c: 'SD', n: 'Sistemas Digitais', p: 'Obana' },
+                            { d: 'Quinta', c: 'LFA', n: 'Ling. Formais', p: 'André' },
+                            { d: 'Sexta', c: 'LPOO', n: 'Lab. Prog. OO', p: 'Lucas' }
+                        ],
+                        modular: { c: 'LBD', n: 'Lab. Banco de Dados', p: 'Ubirajara', d: '30/03 a 19/06' }
+                    },
+                    {
+                        id: 7, label: '7ª Fase', link: 'https://bit.ly/BCC7aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'QTS', n: 'Qualidade de Software', p: 'Ubirajara' },
+                            { d: 'Terça', c: 'CG', n: 'Computação Gráfica', p: 'Wesley' },
+                            { d: 'Quarta', c: 'IHC', n: 'IHC', p: 'Juvenal' },
+                            { d: 'Quinta', c: 'DSDM', n: 'Desenv. Móveis', p: 'Elton' },
+                            { d: 'Sexta', c: 'CO', n: 'Compiladores', p: 'André' }
+                        ],
+                        extras: [
+                            { c: 'TCC I', n: 'Trabalho de Conclusão I', p: 'Elton' },
+                            { c: 'TCC II', n: 'Trabalho de Conclusão II', p: 'Obana' },
+                            { c: 'ESO I', n: 'Estágio I', p: 'Ubirajara' },
+                            { c: 'ESO II', n: 'Estágio II', p: 'Wesley' }
+                        ]
+                    }
+                ]
+            },
+            'ROO': {
+                name: 'Rondonópolis',
+                phases: [
+                    {
+                        id: 2, label: '2ª Fase', link: 'https://bit.ly/BCC2aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'AOC', n: 'Arq. Computadores', p: 'Pierre' },
+                            { d: 'Terça', c: 'PIPDD', n: 'Prop. Intelectual', p: 'Everton' },
+                            { d: 'Quarta', c: 'GA', n: 'Geometria Analítica', p: 'Jemy' },
+                            { d: 'Quinta', c: 'TMP', n: 'Teoria de Pesquisa', p: 'Breno' },
+                            { d: 'Sexta', c: 'CA1', n: 'Cálculo I', p: 'Jemy' }
+                        ],
+                        modular: { c: 'ALP2', n: 'Algoritmos II', p: 'Max', d: '30/03 a 19/06' }
+                    },
+                    {
+                        id: 4, label: '4ª Fase', link: 'https://bit.ly/BCC4aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'F1', n: 'Física I', p: 'Everton' },
+                            { d: 'Terça', c: 'ED2', n: 'Est. Dados II', p: 'Max' },
+                            { d: 'Quarta', c: 'IBD', n: 'Intr. Banco de Dados', p: 'Breno' },
+                            { d: 'Quinta', c: 'CN', n: 'Cálculo Numérico', p: 'Jemy' },
+                            { d: 'Sexta', c: 'ES1', n: 'Eng. Software I', p: 'Humberto' }
+                        ],
+                        modular: { c: 'LRC', n: 'Lab. Redes', p: 'Pierre', d: '30/03 a 19/06' }
+                    },
+                    {
+                        id: 6, label: '6ª Fase', link: 'https://bit.ly/BCC6aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'DSW', n: 'Desenv. Web', p: 'Adriano' },
+                            { d: 'Terça', c: 'SO', n: 'Sist. Operacionais', p: 'Pierre' },
+                            { d: 'Quarta', c: 'SE', n: 'Sist. Embarcados', p: 'Max' },
+                            { d: 'Quinta', c: 'PAD', n: 'Proc. Alto Desemp.', p: 'Humberto' },
+                            { d: 'Sexta', c: 'SM', n: 'Sist. Multimídia', p: 'Breno' }
+                        ],
+                        modular: null
+                    },
+                    {
+                        id: 8, label: '8ª Fase', link: 'https://bit.ly/BCC8aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'PI', n: 'Proc. Imagens', p: 'Carlos' },
+                            { d: 'Terça', c: 'IA', n: 'Inteligência Artif.', p: 'Adriano' },
+                            { d: 'Quarta', c: 'SD', n: 'Sist. Distribuídos', p: 'Humberto' },
+                            { d: 'Quinta', c: 'CF', n: 'Comp. Forense', p: 'Everton' },
+                            { d: 'Sexta', c: 'RVA', n: 'Realidade Virtual', p: 'Adriano' }
+                        ],
+                        extras: [
+                            { c: 'TCC I', n: 'Trabalho de Conclusão I', p: 'Elton' },
+                            { c: 'TCC II', n: 'Trabalho de Conclusão II', p: 'Obana' },
+                            { c: 'ESO I', n: 'Estágio I', p: 'Ubirajara' },
+                            { c: 'ESO II', n: 'Estágio II', p: 'Wesley' }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // --- APP LOGIC ---
+        const app = {
+            state: {
+                view: 'schedule',
+                campus: 'AIA',
+                phaseIdx: 0,
+                chartInstance: null
+            },
+
+            init() {
+                this.updateView();
+            },
+
+            navigate(viewName) {
+                this.state.view = viewName;
+                this.updateView();
+                
+                // Update nav classes
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active', 'text-brand-500', 'bg-slate-800'));
+                const activeNav = document.getElementById('nav-' + viewName);
+                if(activeNav) activeNav.classList.add('active');
+            },
+
+            setCampus(code) {
+                this.state.campus = code;
+                this.state.phaseIdx = 0;
+                this.renderSchedule();
+                
+                // Toggle Tab Styles
+                const btnAIA = document.getElementById('tab-aia');
+                const btnROO = document.getElementById('tab-roo');
+                const activeClass = 'bg-brand-600 text-white shadow-md';
+                const inactiveClass = 'text-slate-400 hover:text-white';
+
+                if(code === 'AIA') {
+                    btnAIA.className = `px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeClass}`;
+                    btnROO.className = `px-6 py-2 rounded-lg text-sm font-bold transition-all ${inactiveClass}`;
+                } else {
+                    btnAIA.className = `px-6 py-2 rounded-lg text-sm font-bold transition-all ${inactiveClass}`;
+                    btnROO.className = `px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeClass}`;
+                }
+            },
+
+            setPhase(idx) {
+                this.state.phaseIdx = idx;
+                this.renderSchedule();
+            },
+
+            updateView() {
+                const views = ['schedule', 'guide'];
+                views.forEach(v => {
+                    const el = document.getElementById('view-' + v);
+                    if(el) el.classList.add('hidden');
+                });
+                
+                const activeEl = document.getElementById('view-' + this.state.view);
+                if(activeEl) activeEl.classList.remove('hidden');
+
+                if(this.state.view === 'schedule') {
+                    this.setCampus(this.state.campus); // trigger render
+                }
+            },
+
+            renderSchedule() {
+                const dataSet = data[this.state.campus];
+                const phase = dataSet.phases[this.state.phaseIdx];
+                const container = document.getElementById('schedule-container');
+                const tabsContainer = document.getElementById('phase-tabs');
+
+                // Render Tabs
+                tabsContainer.innerHTML = dataSet.phases.map((p, i) => `
+                    <button onclick="app.setPhase(${i})" 
+                        class="px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all border ${i === this.state.phaseIdx ? 'bg-brand-500 border-brand-500 text-white shadow-lg shadow-brand-500/25' : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-500 hover:text-white'}">
+                        ${p.label}
+                    </button>
+                `).join('');
+
+                // Render Content
+                let html = `
+                    <div class="glass-panel rounded-2xl p-6 relative overflow-hidden">
+                        <!-- Top Light Effect -->
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-500 to-cyan-400"></div>
+                        
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                            <div>
+                                <h2 class="text-2xl font-bold text-white">${phase.label}</h2>
+                                <span class="text-slate-400 text-sm font-mono"><i class="fa-regular fa-clock text-brand-500"></i> 19h00 - 22h30</span>
+                                
+                                <!-- Google Calendar Link -->
+                                <div class="mt-2">
+                                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">ADICIONE NA SUA AGENDA GOOGLE:</p>
+                                    <a href="${phase.link}" target="_blank" class="inline-flex items-center gap-2 text-brand-400 hover:text-white bg-brand-500/10 hover:bg-brand-500/20 px-3 py-1 rounded text-xs font-mono transition-colors border border-brand-500/20">
+                                        <i class="fa-solid fa-link"></i> ${phase.link}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-xl border border-slate-700/50">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-800/80 text-slate-400 text-xs uppercase tracking-wider border-b border-slate-700">
+                                        <th class="p-4">Dia</th>
+                                        <th class="p-4">Sigla</th>
+                                        <th class="p-4">Disciplina</th>
+                                        <th class="p-4">Professor</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-700/50 text-sm bg-slate-900/40">
+                                    ${phase.schedule.map(s => `
+                                        <tr class="hover:bg-slate-800/50 transition-colors">
+                                            <td class="p-4 font-mono text-brand-400">${s.d}</td>
+                                            <td class="p-4 font-bold text-white">${s.c}</td>
+                                            <td class="p-4 text-slate-300">${s.n}</td>
+                                            <td class="p-4 text-slate-400"><i class="fa-regular fa-user mr-1 opacity-50"></i> ${s.p}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Modular Discipline -->
+                        ${phase.modular ? `
+                        <div class="mt-4 bg-emerald-900/20 border border-emerald-500/20 rounded-xl p-4 flex items-start gap-4">
+                            <div class="text-emerald-400 text-xl"><i class="fa-solid fa-cubes-stacked"></i></div>
+                            <div>
+                                <h4 class="text-emerald-400 font-bold text-xs uppercase tracking-wider mb-1">Disciplina Modular</h4>
+                                <p class="text-white font-semibold">${phase.modular.c} - ${phase.modular.n}</p>
+                                <p class="text-slate-400 text-xs mt-1">Prof. ${phase.modular.p} • <span class="text-emerald-200 font-mono">${phase.modular.d}</span></p>
+                            </div>
+                        </div>` : ''}
+
+                        <!-- Extras (TCC/Estagio) -->
+                        ${phase.extras ? `
+                        <div class="mt-4 bg-indigo-900/20 border border-indigo-500/20 rounded-xl p-4">
+                            <h4 class="text-indigo-400 font-bold text-xs uppercase tracking-wider mb-3"><i class="fa-solid fa-graduation-cap mr-1"></i> TCC & Estágio (Contraturno)</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                ${phase.extras.map(e => `
+                                    <div class="bg-indigo-950/30 p-2 rounded border border-indigo-500/10 flex justify-between items-center">
+                                        <span class="text-indigo-200 text-sm font-semibold">${e.c}</span>
+                                        <span class="text-slate-400 text-xs">${e.p}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>` : ''}
+                    </div>
+                `;
+
+                container.innerHTML = html;
+                this.updateChart(phase);
+            },
+
+            updateChart(phase) {
+                const ctx = document.getElementById('workloadChart');
+                if(!ctx) return;
+
+                if(this.state.chartInstance) {
+                    this.state.chartInstance.destroy();
+                }
+
+                // Count classes per day
+                const counts = { 'Segunda': 0, 'Terça': 0, 'Quarta': 0, 'Quinta': 0, 'Sexta': 0 };
+                phase.schedule.forEach(s => counts[s.d]++);
+
+                this.state.chartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(counts),
+                        datasets: [{
+                            label: 'Aulas',
+                            data: Object.values(counts),
+                            backgroundColor: '#0ea5e9',
+                            borderRadius: 6,
+                            barThickness: 30
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, max: 2, ticks: { color: '#94a3b8', stepSize: 1 }, grid: { color: '#334155' } },
+                            x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                        }
+                    }
+                });
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+            // Default Nav
+            document.getElementById('nav-schedule').classList.add('active');
+        });
+    </script>
+</body>
+</html>
