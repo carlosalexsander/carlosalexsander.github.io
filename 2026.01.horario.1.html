@@ -38,6 +38,20 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
                     }
                 }
             }
@@ -61,6 +75,12 @@
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        
+        /* Modal Animation */
+        .modal-enter { opacity: 0; transform: scale(0.95); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: opacity 300ms, transform 300ms; }
+        .modal-exit { opacity: 1; transform: scale(1); }
+        .modal-exit-active { opacity: 0; transform: scale(0.95); transition: opacity 200ms, transform 200ms; }
     </style>
 </head>
 <body class="bg-dark-900 text-slate-200 h-screen flex overflow-hidden selection:bg-brand-500 selection:text-white">
@@ -71,7 +91,7 @@
         <div class="p-6 flex flex-col items-center justify-center border-b border-slate-700/50">
             <div class="w-20 h-20 mb-3 relative">
                 <!-- Logo Image Placeholder -->
-                <img src="logo_bcc_vertical_fundo_transparente_texto_branco.png" 
+                <img src="logo_bcc_vertical.2_fundo_transparente_texto_branco.png" 
                      alt="BCC Logo" 
                      class="w-full h-full object-contain drop-shadow-lg"
                      onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex'">
@@ -111,6 +131,12 @@
                 <i class="fa-solid fa-calendar-check w-5 text-center text-slate-500 group-hover:text-brand-500"></i>
                 Calendário Institucional
             </a>
+
+            <!-- ALXnderBETA Link -->
+            <a href="https://bit.ly/iALXnderBETA" target="_blank" class="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-brand-400 bg-brand-500/10 border border-brand-500/20 hover:bg-brand-500/20 transition-all group">
+                <i class="fa-solid fa-robot w-5 text-center text-brand-500"></i>
+                ALXnder <span class="text-[10px] bg-brand-500 text-white px-1.5 rounded ml-auto">BETA</span>
+            </a>
         </nav>
 
         <!-- Footer Info -->
@@ -126,12 +152,6 @@
                 <div class="flex justify-between">
                     <span>Alto Araguaia:</span>
                     <span class="text-slate-200">12h - 18h00</span>
-                </div>
-                <div class="flex justify-between">
-                    <a href="https://bit.ly/iALXnderBETA" target="_blank" class="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-brand-500 hover:bg-slate-700/50 transition-all group">
-                    <i class="fa-solid fa-calendar-check w-5 text-center text-slate-500 group-hover:text-brand-500"></i>
-                        <span>ALXnder: 24h por dia</span>
-                        <span class="text-slate-200">12h - 18h00</span>
                 </div>
             </div>
         </div>
@@ -326,6 +346,59 @@
         </div>
     </main>
 
+    <!-- ALXnder Announcement Modal -->
+    <div id="alxnder-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300" role="dialog" aria-modal="true">
+        <div class="bg-slate-900 border border-brand-500/50 rounded-2xl w-full max-w-2xl shadow-2xl relative transform scale-95 transition-transform duration-300">
+            <!-- Close Button -->
+            <button onclick="app.toggleModal('alxnder-modal', false)" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            
+            <!-- Header -->
+            <div class="p-6 border-b border-slate-700 bg-brand-900/20 rounded-t-2xl flex items-center gap-4">
+                <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center text-white text-2xl animate-pulse shadow-lg shadow-brand-500/30">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Plantão BCC UNEMAT Informa</h3>
+                    <p class="text-brand-400 text-sm font-mono uppercase tracking-wider">Novo Assistente Virtual Inteligente</p>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="p-6 space-y-5 text-slate-300 leading-relaxed max-h-[60vh] overflow-y-auto">
+                <p class="text-lg"><strong class="text-white">🤖 Atenção, tripulação (Docentes e Discentes)!</strong></p>
+                <p>A Coordenação acaba de dar um upgrade no sistema. Conheçam o <strong class="text-brand-400">ALXnder</strong>, nosso novo copiloto virtual.</p>
+                
+                <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700 space-y-3">
+                    <p class="flex items-start gap-3">
+                        <i class="fa-solid fa-database text-brand-500 mt-1"></i> 
+                        <span><strong>Treinado com:</strong> O novo PPC, a Normatização Acadêmica 2024, regulamentos de Estágio, TCC e muito mais.</span>
+                    </p>
+                    <p class="flex items-start gap-3">
+                        <i class="fa-solid fa-bolt text-yellow-400 mt-1"></i> 
+                        <span><strong>A ideia?</strong> Chega de perder horas caçando uma regra específica em PDFs gigantes. Agilize a burocracia com respostas rápidas.</span>
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-3 text-sm italic text-slate-400 border-l-4 border-brand-500 pl-4 py-1">
+                    <span class="text-2xl">🚀</span>
+                    <p><strong>FASE BETA LIBERADA!</strong> O sistema está aberto para testes e precisamos da ajuda de vocês para calibrar a precisão das respostas.</p>
+                </div>
+                
+                <p class="text-center font-bold text-brand-300">… ao infinito e além… 😇😉🚀</p>
+            </div>
+
+            <!-- Footer -->
+            <div class="p-6 border-t border-slate-700 flex justify-end gap-3 bg-slate-800/50 rounded-b-2xl">
+                <button onclick="app.toggleModal('alxnder-modal', false)" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 transition-colors">Fechar</button>
+                <a href="https://bit.ly/iALXnderBETA" target="_blank" class="px-6 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-bold shadow-lg shadow-brand-500/20 transition-all flex items-center gap-2 hover:scale-105">
+                    Acessar e Testar <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <script>
         // --- DATA ---
         const data = {
@@ -395,7 +468,7 @@
                             { d: 'Quinta', c: 'TMP', n: 'Teoria de Pesquisa', p: 'Breno' },
                             { d: 'Sexta', c: 'CA1', n: 'Cálculo I', p: 'Jemy' }
                         ],
-                        modular: { c: 'ALP2', n: 'Algoritmos II', p: 'Max', d: '30/03 a 01/04; 11/05 a 15/05; 15/06 a 19/06' }
+                        modular: { c: 'ALP2', n: 'Algoritmos II', p: 'Max', d: '30/03 a 19/06' }
                     },
                     {
                         id: 4, label: '4ª Fase', link: 'https://bit.ly/BCC4aFase',
@@ -406,7 +479,7 @@
                             { d: 'Quinta', c: 'CN', n: 'Cálculo Numérico', p: 'Jemy' },
                             { d: 'Sexta', c: 'ES1', n: 'Eng. Software I', p: 'Humberto' }
                         ],
-                        modular: { c: 'LRC', n: 'Lab. Redes', p: 'Pierre', d: '30/03 a 01/04; 11/05 a 15/05; 15/06 a 19/06' }
+                        modular: { c: 'LRC', n: 'Lab. Redes', p: 'Pierre', d: '30/03 a 19/06' }
                     },
                     {
                         id: 6, label: '6ª Fase', link: 'https://bit.ly/BCC6aFase',
@@ -450,6 +523,19 @@
 
             init() {
                 this.updateView();
+                // Trigger Modal on Load (simulating a news popup)
+                setTimeout(() => this.toggleModal('alxnder-modal', true), 1000);
+            },
+
+            toggleModal(id, show) {
+                const el = document.getElementById(id);
+                if (show) {
+                    el.classList.remove('pointer-events-none');
+                    el.classList.remove('opacity-0');
+                } else {
+                    el.classList.add('opacity-0');
+                    el.classList.add('pointer-events-none');
+                }
             },
 
             navigate(viewName) {
@@ -518,7 +604,7 @@
 
                 // Render Content
                 let html = `
-                    <div class="glass-panel rounded-2xl p-6 relative overflow-hidden">
+                    <div class="glass-panel rounded-2xl p-6 relative overflow-hidden animate-slide-up">
                         <!-- Top Light Effect -->
                         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-500 to-cyan-400"></div>
                         
